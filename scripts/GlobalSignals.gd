@@ -1,0 +1,4 @@
+extends Node
+
+signal blue_switch_toggle_on
+signal blue_switch_toggle_off

@@ -4,13 +4,21 @@ extends CharacterBody2D
 @export var jump_force: float = -200.0  # Jump strength (negative = up)
 @export var gravity: float = 800.0  # Gravity force
 
-func _process(delta):
+var is_facing_right: bool = true
+
+
+func _process(_delta):
 	if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 		$AnimatedSprite2D.play("run_right")
 	else:
 		$AnimatedSprite2D.play("idle")
+		
+	if Input.is_action_just_pressed("move_left"):
+		is_facing_right = false
+	elif Input.is_action_just_pressed("move_right"):
+		is_facing_right = true
 
-	$AnimatedSprite2D.flip_h = Input.is_action_pressed("move_left")
+	$AnimatedSprite2D.flip_h = !is_facing_right
 
 func _physics_process(delta):
 	# Apply gravity
