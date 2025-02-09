@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://diahk5xuq8ayp"]
+
+[ext_resource type="Script" path="res://scripts/CloudBody.gd" id="1_m7dqg"]
+[ext_resource type="Texture2D" uid="uid://twyjgucux6w5" path="res://assets/3p/Sky-and-Water.png" id="2_wy6ed"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pmbp"]
+atlas = ExtResource("2_wy6ed")
+region = Rect2(0, 180, 60, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j00rw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7pmbp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ntgr"]
+size = Vector2(43, 4)
+
+[node name="CloudBody" type="StaticBody2D"]
+script = ExtResource("1_m7dqg")
+
+[node name="Cloud" type="AnimatedSprite2D" parent="."]
+position = Vector2(-204.769, -174.5)
+scale = Vector2(0.807692, 0.7)
+sprite_frames = SubResource("SpriteFrames_j00rw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-206, -171)
+shape = SubResource("RectangleShape2D_6ntgr")

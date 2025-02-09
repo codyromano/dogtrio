@@ -6,7 +6,6 @@ extends CharacterBody2D
 
 var is_facing_right: bool = true
 
-
 func _process(_delta):
 	if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 		$AnimatedSprite2D.play("run_right")
@@ -30,7 +29,7 @@ func _physics_process(delta):
 	if direction:
 		velocity.x = direction * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed * delta)  # Smooth stopping
+		velocity.x = move_toward(velocity.x, 0, speed * delta * 2)  # Smooth stopping
 
 	# Jumping
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -38,6 +37,12 @@ func _physics_process(delta):
 
 	# Apply movement
 	move_and_slide()
+	
+	var collision_count = get_slide_collision_count()
+	for i in range(collision_count):
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		print("Collided with: ", collider.name, " (Type: ", collider.get_class(), ")")
 
 func super_jump():
-	velocity.y = jump_force * 2
+	velocity.y = jump_force * 3

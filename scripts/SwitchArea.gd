@@ -20,6 +20,7 @@ func _on_body_entered(_body: Node2D):
 	if is_toggle_on:
 		return
 		
+	sprite.play("toggled_on")
 	GlobalSignals.blue_switch_toggle_on.emit()
 	is_toggle_on = true
 
