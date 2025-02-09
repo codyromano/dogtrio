@@ -4,12 +4,14 @@ var blink_timer: Timer
 var make_visible_timer: Timer
 
 func _ready():
-	GlobalSignals.blue_switch_toggle_on.connect(_on_blue_switch_toggle_on)
+	GlobalSignals.blue_switch_toggle_on.connect(
+		_on_blue_switch_toggle_on
+	)
 	# For debugging only
 	# _on_blue_switch_toggle_on()
 
 func _on_blue_switch_toggle_on():
-	$CollisionShape2D.set_disabled(true)
+	$CollisionShape2D.call_deferred("set_disabled", true)
 	
 	# Create a timer to make the blue block blink
 	blink_timer = Timer.new()
@@ -31,7 +33,8 @@ func _on_blink_timer_timeout():
 	visible = !visible  # Toggle visibility
 	
 func _on_make_visible_timer_timeout():
-	$CollisionShape2D.set_disabled(false)
+	$CollisionShape2D.call_deferred("set_disabled", false)
+		
 	visible = true
 	remove_child(blink_timer)
 	remove_child(make_visible_timer)

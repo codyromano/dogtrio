@@ -21,6 +21,7 @@ func _on_body_entered(_body: Node2D):
 		return
 		
 	sprite.play("toggled_on")
+	$SoundSwitch.play()
 	GlobalSignals.blue_switch_toggle_on.emit()
 	is_toggle_on = true
 

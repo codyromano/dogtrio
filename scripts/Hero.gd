@@ -6,15 +6,19 @@ extends CharacterBody2D
 
 var is_facing_right: bool = true
 
+
 func _process(_delta):
 	if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 		$AnimatedSprite2D.play("run_right")
 	else:
 		$AnimatedSprite2D.play("idle")
+		$SoundFootsteps.stop()
 		
 	if Input.is_action_just_pressed("move_left"):
+		$SoundFootsteps.play()
 		is_facing_right = false
 	elif Input.is_action_just_pressed("move_right"):
+		$SoundFootsteps.play()
 		is_facing_right = true
 
 	$AnimatedSprite2D.flip_h = !is_facing_right
@@ -33,16 +37,14 @@ func _physics_process(delta):
 
 	# Jumping
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		$SoundJump.play()
 		velocity.y = jump_force
 
 	# Apply movement
 	move_and_slide()
-	
-	var collision_count = get_slide_collision_count()
-	for i in range(collision_count):
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		print("Collided with: ", collider.name, " (Type: ", collider.get_class(), ")")
 
 func super_jump():
+	$SoundSuperJump.play()
 	velocity.y = jump_force * 3
+
+
