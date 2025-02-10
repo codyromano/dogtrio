@@ -8,6 +8,9 @@ var is_facing_right: bool = true
 
 
 func _process(_delta):
+	if Input.is_action_just_pressed("fart"):
+		_fart()
+
 	if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 		$AnimatedSprite2D.play("run_right")
 	else:
@@ -42,6 +45,10 @@ func _physics_process(delta):
 
 	# Apply movement
 	move_and_slide()
+	
+func _fart():
+	$SoundFart.play()
+	velocity.y = jump_force * 1.25
 
 func super_jump():
 	$SoundSuperJump.play()
