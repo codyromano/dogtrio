@@ -1,8 +1,37 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ctpmqcm43p6g0"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://ctpmqcm43p6g0"]
 
 [ext_resource type="FontFile" uid="uid://dfiiy3k64vk3m" path="res://assets/fonts/80s-retro-future.ttf" id="1_tdhbs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0r1a"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u0ib6"]
+bg_color = Color(0.247059, 0.521569, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 17
 
 [resource]
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 12
 Label/fonts/font = ExtResource("1_tdhbs")
+ProgressBar/constants/outline_size = 15
+ProgressBar/styles/background = SubResource("StyleBoxFlat_b0r1a")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_u0ib6")

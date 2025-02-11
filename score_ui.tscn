@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl4hjueymmfj0"]
+[gd_scene load_steps=10 format=3 uid="uid://dl4hjueymmfj0"]
 
 [ext_resource type="Script" path="res://score_ui_canvas.gd" id="1_1vnl1"]
 [ext_resource type="Theme" uid="uid://ctpmqcm43p6g0" path="res://themes/bing_bong.tres" id="1_wos0u"]
 [ext_resource type="Script" path="res://scenes/ScoreUILayerControl.gd" id="2_r6ak0"]
+[ext_resource type="Script" path="res://FuelProgressBar.gd" id="4_00mw5"]
 [ext_resource type="Texture2D" uid="uid://ch08py3blobdw" path="res://assets/3p/Items.png" id="4_5ijgs"]
 [ext_resource type="Script" path="res://ScoreLabel.gd" id="4_58x1t"]
 
@@ -42,7 +43,17 @@ grow_horizontal = 0
 theme = ExtResource("1_wos0u")
 script = ExtResource("2_r6ak0")
 
-[node name="ScoreUI" type="Node2D" parent="Control"]
+[node name="ProgressBar" type="ProgressBar" parent="Control"]
+layout_mode = 2
+offset_left = -2777.0
+offset_top = 7.0
+offset_right = -2171.0
+offset_bottom = 100.0
+theme = ExtResource("1_wos0u")
+value = 50.0
+rounded = true
+show_percentage = false
+script = ExtResource("4_00mw5")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 1
@@ -65,6 +76,6 @@ script = ExtResource("4_58x1t")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/HBoxContainer/Label"]
 unique_name_in_owner = true
 position = Vector2(-170, 6)
-scale = Vector2(6.93751, 6.93751)
+scale = Vector2(5.875, 5.875)
 sprite_frames = SubResource("SpriteFrames_map64")
 centered = false

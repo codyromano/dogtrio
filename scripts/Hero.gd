@@ -5,13 +5,27 @@ extends CharacterBody2D
 @export var gravity: float = 800.0  # Gravity force
 
 var is_facing_right: bool = true
+var spend_fuel_duration: float = 0
+var fuel_to_burn: float = 0
 
-func _process(_delta):
+func _ready():
+	GlobalSignals.update_fuel_remaining.connect(_update_fuel_remaining)
+
+func _update_fuel_remaining(fuel_left):
+	fuel_to_burn = fuel_left
+	
+func _process(delta):
 	var tween: Tween = create_tween()
 	if Input.is_action_pressed("fart"):
-		_fart()
+		spend_fuel_duration += delta
+		
+		if fuel_to_burn:
+			_fart()
+			
+		GlobalSignals.spend_fuel.emit(spend_fuel_duration)
 		tween.tween_property($SoundFart, "volume_db", 0, 0)
 	else:
+		spend_fuel_duration = 0
 		tween.tween_property($SoundFart, "volume_db", -50, 1)
 
 	if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
