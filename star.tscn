@@ -1,0 +1,128 @@
+[gd_scene load_steps=12 format=3 uid="uid://wgpxs6ckh71o"]
+
+[ext_resource type="Texture2D" uid="uid://ch08py3blobdw" path="res://assets/3p/Items.png" id="1_b8vnb"]
+[ext_resource type="AudioStream" uid="uid://cucpmhpy4osmx" path="res://assets/3p/audio/Win/win-8.wav" id="2_6ltb4"]
+
+[sub_resource type="GDScript" id="GDScript_hn15r"]
+script/source = "extends Area2D
+
+var is_collected: bool = false
+	
+func _on_star_disappeared():
+	$AnimatedSprite2D.queue_free()
+	GlobalSignals.star_collected.emit()
+
+func _on_body_entered(_body):
+	if is_collected:
+		return
+	
+	is_collected = true
+	
+	$SoundStar.play()
+	# $AnimatedSprite2D.visible = false
+	#  $AnimatedSprite2D.apply_scale(Vector2(1.5, 1.5))
+	
+	# var score_ui_node = get_node(\"/root/Level 1/ScoreUI\")
+	
+	var camera = get_viewport().get_camera_2d()
+	var center_position = camera.get_screen_center_position()
+	
+	var upper_right = Vector2(
+		center_position.x + 250, 
+		$AnimatedSprite2D.position.y - 250
+	)
+	
+	var tween = create_tween()
+	
+	tween.tween_property(
+		$AnimatedSprite2D,
+		\"scale\",
+		Vector2(1.75, 1.75),
+		1
+	)
+	
+	tween.tween_property(
+		$AnimatedSprite2D,
+		\"position\",
+		upper_right,
+		2
+	) # Moves in 2 seconds
+	
+	tween.connect(\"finished\", _on_star_disappeared)
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3whp"]
+atlas = ExtResource("1_b8vnb")
+region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_afcgf"]
+atlas = ExtResource("1_b8vnb")
+region = Rect2(240, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smtjg"]
+atlas = ExtResource("1_b8vnb")
+region = Rect2(240, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gja4y"]
+atlas = ExtResource("1_b8vnb")
+region = Rect2(240, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6426"]
+atlas = ExtResource("1_b8vnb")
+region = Rect2(240, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88mhg"]
+atlas = ExtResource("1_b8vnb")
+region = Rect2(240, 80, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_babwe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3whp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_afcgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smtjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gja4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6426")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88mhg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3sf8q"]
+size = Vector2(9, 10)
+
+[node name="Star" type="Area2D"]
+script = SubResource("GDScript_hn15r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(47, -106)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_babwe")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(47, -106)
+shape = SubResource("RectangleShape2D_3sf8q")
+
+[node name="SoundStar" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_6ltb4")
+volume_db = 4.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="child_entered_tree" from="CollisionShape2D" to="." method="_on_collision_shape_2d_child_entered_tree"]
+[connection signal="child_entered_tree" from="CollisionShape2D" to="CollisionShape2D" method="_on_child_entered_tree"]
+[connection signal="tree_entered" from="CollisionShape2D" to="." method="_on_collision_shape_2d_tree_entered"]

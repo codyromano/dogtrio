@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://dl4hjueymmfj0"]
+
+[ext_resource type="Script" path="res://score_ui_canvas.gd" id="1_1vnl1"]
+[ext_resource type="Theme" uid="uid://ctpmqcm43p6g0" path="res://themes/bing_bong.tres" id="1_wos0u"]
+[ext_resource type="Script" path="res://scenes/ScoreUILayerControl.gd" id="2_r6ak0"]
+[ext_resource type="Texture2D" uid="uid://ch08py3blobdw" path="res://assets/3p/Items.png" id="4_5ijgs"]
+[ext_resource type="Script" path="res://ScoreLabel.gd" id="4_58x1t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vqw4a"]
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1uh2"]
+atlas = ExtResource("4_5ijgs")
+region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_map64"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1uh2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_1vnl1")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 100.0
+offset_right = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme = ExtResource("1_wos0u")
+script = ExtResource("2_r6ak0")
+
+[node name="ScoreUI" type="Node2D" parent="Control"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -46.0
+offset_bottom = 88.0
+grow_horizontal = 0
+theme_override_constants/separation = 16384
+
+[node name="Label" type="Label" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_wos0u")
+text = "0"
+label_settings = SubResource("LabelSettings_vqw4a")
+horizontal_alignment = 2
+script = ExtResource("4_58x1t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/HBoxContainer/Label"]
+unique_name_in_owner = true
+position = Vector2(-170, 6)
+scale = Vector2(6.93751, 6.93751)
+sprite_frames = SubResource("SpriteFrames_map64")
+centered = false

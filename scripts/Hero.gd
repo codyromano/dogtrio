@@ -6,10 +6,13 @@ extends CharacterBody2D
 
 var is_facing_right: bool = true
 
-
 func _process(_delta):
-	if Input.is_action_just_pressed("fart"):
+	var tween: Tween = create_tween()
+	if Input.is_action_pressed("fart"):
 		_fart()
+		tween.tween_property($SoundFart, "volume_db", 0, 0)
+	else:
+		tween.tween_property($SoundFart, "volume_db", -50, 1)
 
 	if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 		$AnimatedSprite2D.play("run_right")
@@ -47,8 +50,11 @@ func _physics_process(delta):
 	move_and_slide()
 	
 func _fart():
-	$SoundFart.play()
-	velocity.y = jump_force * 1.25
+	if not $SoundFart.is_playing():
+		$SoundFart.play()
+		
+	# velocity.y = jump_force * 1.25
+	velocity.y = jump_force * 1.05
 
 func super_jump():
 	$SoundSuperJump.play()
