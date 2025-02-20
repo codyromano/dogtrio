@@ -6,3 +6,4 @@ signal star_collected
 signal capability_unlocked_fart
 signal spend_fuel
 signal update_fuel_remaining
+signal player_pipe_collision

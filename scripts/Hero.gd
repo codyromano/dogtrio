@@ -9,35 +9,30 @@ var spend_fuel_duration: float = 0
 var fuel_to_burn: float = 0
 var tile_map: TileMap
 
+var float_toward_target = null
+var hero: CharacterBody2D
+var pipe_tween: Tween
+
 func _ready():
 	tile_map = get_node('/root/Level 1/TileMap')
+	hero = get_node("/root/Level 1/Hero")
+	
 	GlobalSignals.update_fuel_remaining.connect(_update_fuel_remaining)
+	GlobalSignals.player_pipe_collision.connect(_detect_pipe_collision)
 
-func _is_hero_touching_pipe_entrance(hero):
-	var local_position = tile_map.to_local(hero.global_position)
-	var tile_coords = tile_map.local_to_map(local_position)
-	var data = tile_map.get_cell_tile_data(1, tile_coords)
-	
-	if (data):
-		return data.get_custom_data("power") == "pipe"
-	
-	return false
-
-func _detect_pipe_collision():
+func _detect_pipe_collision(tile_coords: Vector2, tile_map: TileMap):
 	var hero: CharacterBody2D = get_node("/root/Level 1/Hero")
-	if !self._is_hero_touching_pipe_entrance(hero):
-		return
 
 	var sound: AudioStreamPlayer2D = $SoundPipe
 	if (!sound.playing):
 		sound.play()
+		
+	float_toward_target = tile_coords
 
 func _update_fuel_remaining(fuel_left):
 	fuel_to_burn = fuel_left
 	
 func _process(delta):
-	self._detect_pipe_collision()
-	
 	var tween: Tween = create_tween()
 	if Input.is_action_pressed("fart"):
 		spend_fuel_duration += delta
@@ -67,6 +62,14 @@ func _process(delta):
 	$AnimatedSprite2D.flip_h = !is_facing_right
 
 func _physics_process(delta):
+	if float_toward_target is Vector2:
+		# hero.global_position = float_toward_target
+		pipe_tween = create_tween()
+		pipe_tween.tween_property(self, "position", float_toward_target, 0.5)
+		
+		move_and_slide()
+		return
+	
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y += gravity * delta

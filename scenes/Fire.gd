@@ -9,6 +9,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var tween: Tween = create_tween()
+	
 	if Input.is_action_pressed("fart"):
 		tween.tween_property(self, "modulate:a", 1, 0.25)
 	else:
