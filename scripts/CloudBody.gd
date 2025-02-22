@@ -1,11 +1,12 @@
 extends StaticBody2D
 
 @export var move_time: float = 200  # Time to move out of view
+@export var position_y: int = 20
 
 var tween: Tween
 
 func _ready():
-	position.y = -20
+	position.y = position_y
 	move_out_of_view()
 
 func move_out_of_view():

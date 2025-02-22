@@ -60,10 +60,9 @@ func _process(delta):
 		is_facing_right = true
 
 	$AnimatedSprite2D.flip_h = !is_facing_right
-
+	
 func _physics_process(delta):
 	if float_toward_target is Vector2:
-		# hero.global_position = float_toward_target
 		pipe_tween = create_tween()
 		pipe_tween.tween_property(self, "position", float_toward_target, 0.5)
 		

@@ -6860,9 +6860,6 @@ shape = SubResource("RectangleShape2D_icr6a")
 [node name="SoundSwitch" type="AudioStreamPlayer2D" parent="SwitchArea"]
 stream = ExtResource("11_13h7l")
 
-[node name="CloudBody" parent="." instance=ExtResource("11_g8l5h")]
-position = Vector2(0, 5)
-
 [node name="CloudCreationTimer" type="Timer" parent="."]
 wait_time = 7.0
 autostart = true
@@ -6991,6 +6988,10 @@ position = Vector2(88, 19)
 position = Vector2(170, -262)
 
 [node name="ScoreUI" parent="." instance=ExtResource("29_ca1tq")]
+
+[node name="CloudBody2" parent="." instance=ExtResource("11_g8l5h")]
+position = Vector2(-77, -197)
+position_y = 0
 
 [connection signal="body_entered" from="SpringBoxArea" to="SpringBoxArea" method="_on_body_entered"]
 [connection signal="body_exited" from="SpringBoxArea" to="SpringBoxArea" method="_on_body_exited"]
